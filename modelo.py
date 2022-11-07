@@ -57,6 +57,9 @@ class Playlist:
     def tamanho(self):
         return len(self._programas)
 
+    def __len__(self):
+        return len(self._programas)
+
 
 vingadores = Filme("vingadores - guerra infinita", 2018, 160)
 atlanta = Serie("atlanta", 2018, 2)
