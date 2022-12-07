@@ -42,17 +42,29 @@ class ExtratorURL:
             valor = self.get_url_parametros()[indice_valor:indice_e_comercial]
         return valor
 
+    def converte_valor(self, valor_dolar):
+        #valor_dolar = 5.50  # 1 dólar = 5.50 reais
+        moeda_origem = extrator_url.get_valor_parametro("moedaOrigem")
+        moeda_destino = extrator_url.get_valor_parametro("moedaDestino")
+        quantidade = extrator_url.get_valor_parametro("quantidade")
+
+        if moeda_destino == "dolar":
+            return float(quantidade) / valor_dolar
+        else:
+            return float(quantidade) * valor_dolar
+
     def __len__(self):
         return len(self.url)
 
     def __str__(self):
         return f' URL: {self.url} \n Parâmetros: {self.get_url_parametros()} \n URL Base: {self.get_url_base()}'
 
+    def __eq__(self, other):
+        return self.url == other.url
 
-url = 'http://bytebank.com/cambio?moedaDestino=dolar&quantidade=100&moedaOrigem=real'
+
+url = "bytebank.com/cambio?quantidade=100&moedaOrigem=dolar&moedaDestino=real"
 extrator_url = ExtratorURL(url)
-print("O tamanho da URL: ", len(extrator_url))
-print(extrator_url)
 
-# valor_quantidade = extrator_url.get_valor_parametro("quantidade")
-# print(valor_quantidade)
+valor = extrator_url.converte_valor(5.50)
+print(valor)
